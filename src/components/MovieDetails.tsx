@@ -5,7 +5,7 @@ import {
   Row,
   Col,
   Image,
-  //   Badge,
+  Badge,
   Card,
   Spinner,
   Alert,
@@ -49,6 +49,22 @@ const MovieDetails: React.FC = () => {
     fetchMovieAndReviews();
   }, [id]);
 
+  const averageRating =
+    reviews.length > 0
+      ? (
+          reviews.reduce((acc, review) => acc + review.rating, 0) /
+          reviews.length
+        ).toFixed(1)
+      : null;
+
+  function runtimeToStr(runtime: number): string {
+    let result: string = "";
+    const min: number = runtime % 60;
+    const hour: number = (runtime - min) / 60;
+    if (hour > 0) result += `${hour}h `;
+    if (min > 0) result += `${min} min`;
+    return result;
+  }
   if (loading) {
     return (
       <Container className="text-center py-5">
@@ -101,7 +117,19 @@ const MovieDetails: React.FC = () => {
       <hr className="my-5" />
 
       <section>
-        <h3 className="fw-bold mb-4">Critic Reviews</h3>
+        <div className="d-flex align-items-center justify-content-between mb-4">
+          <h3 className="fw-bold mb-0">Critic Reviews</h3>
+          {averageRating && (
+            <Badge
+              bg="warning"
+              text="dark"
+              className="fs-6 d-flex align-items-center py-2 px-3"
+            >
+              <Star size={18} fill="currentColor" className="me-2" />
+              Average Rating: {averageRating}/10
+            </Badge>
+          )}
+        </div>
         {reviews.length === 0 ? (
           <Alert variant="info">No reviews available for this movie yet.</Alert>
         ) : (
@@ -142,14 +170,5 @@ const MovieDetails: React.FC = () => {
     </Container>
   );
 };
-
-function runtimeToStr(runtime: number): string {
-  let result: string = "";
-  const min: number = runtime % 60;
-  const hour: number = (runtime - min) / 60;
-  if (hour > 0) result += `${hour}h `;
-  if (min > 0) result += `${min} min`;
-  return result;
-}
 
 export default MovieDetails;

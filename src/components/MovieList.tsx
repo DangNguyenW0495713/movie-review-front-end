@@ -71,10 +71,12 @@ const MovieList: React.FC = () => {
                 <Card.Title className="fw-bold text-truncate">
                   {movie.title}
                 </Card.Title>
+                {/* Todo: fetch genres and ratings */}
                 {/* <div className="mb-2">
                   <Badge bg="secondary" className="me-1">Genre {movie.genreId}</Badge>
                   <Badge bg="info">Rating {movie.ratingId}</Badge>
                 </div> */}
+                {/* Todo: figure out how to make the synopsis only 2 lines long and the rest be hidden */}
                 {/* <Card.Text className="text-muted small mb-3 line-clamp-3">
                   {movie.synopsis}
                 </Card.Text> */}
